@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crypto Lab</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>🔐 SecureVault</h2>
+
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/vault">Vault</a></li>
+        <li><a href="/generator">Generator</a></li>
+        <li><a href="/security">Security</a></li>
+        <li><a href="/crypto">Crypto Lab</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+
+</div>
+
+<div class="main">
+
+    <div class="topbar">
+        <h1>SHA-256 Hash Generator</h1>
+    </div>
+
+    <div class="form-card">
+
+        <form method="POST">
+
+            <input
+            type="text"
+            name="text"
+            placeholder="Enter Text"
+            required>
+
+            <br><br>
+
+            <button type="submit">
+                Generate Hash
+            </button>
+
+        </form>
+
+        {% if hash %}
+
+        <br>
+
+        <textarea
+        rows="5"
+        style="width:100%;padding:10px;">
+{{ hash }}
+        </textarea>
+
+        {% endif %}
+
+    </div>
+
+    <br>
+
+    <div class="activity">
+
+        <h2>Hashing vs Encryption</h2>
+
+        <ul>
+            <li><strong>Hashing:</strong> One-way process.</li>
+            <li><strong>Encryption:</strong> Reversible process using a key.</li>
+            <li><strong>SHA-256:</strong> Common cryptographic hash function.</li>
+            <li><strong>Fernet:</strong> Encryption method used in SecureVault.</li>
+        </ul>
+
+    </div>
+
+</div>
+
+</body>
+</html>

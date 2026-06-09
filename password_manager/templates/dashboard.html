@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>🔐 SecureVault</h2>
+
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+
+        <li><a href="/vault">Passwords</a></li>
+
+        <li><a href="/generator">Generator</a></li>
+
+        <li><a href="/security">Security</a></li>
+
+        <li><a href="/export">Export</a></li>
+
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+
+</div>
+
+<div class="main">
+
+    <div class="topbar">
+        <h1>Dashboard</h1>
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Passwords</h3>
+            <p>15</p>
+        </div>
+
+        <div class="card">
+            <h3>Strong Passwords</h3>
+            <p>13</p>
+        </div>
+
+        <div class="card">
+            <h3>Weak Passwords</h3>
+            <p>2</p>
+        </div>
+
+    </div>
+
+    <div class="activity">
+
+        <h2>Recent Activity</h2>
+
+        <ul>
+            <li>Added Gmail Password</li>
+            <li>Updated GitHub Password</li>
+            <li>Exported Vault</li>
+        </ul>
+
+    </div>
+
+</div>
+
+</body>
+</html>

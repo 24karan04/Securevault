@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Vault</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>🔐 SecureVault</h2>
+
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/vault">Vault</a></li>
+        <li><a href="/generator">Generator</a></li>
+        <li><a href="/security">Security</a></li>
+        <li><a href="/crypto">Crypto Lab</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+
+</div>
+
+<div class="main">
+
+    <div class="topbar">
+        <h1>Password Vault</h1>
+    </div>
+
+    <input
+    type="text"
+    id="search"
+    placeholder="Search Password..."
+    onkeyup="searchTable()">
+
+    <table id="vaultTable">
+
+        <tr>
+            <th>Website</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Action</th>
+        </tr>
+
+        {% for row in data %}
+
+        <tr>
+
+            <td>{{ row[2] }}</td>
+
+            <td>{{ row[3] }}</td>
+
+            <td>
+                ••••••••
+            </td>
+
+            <td>
+
+                <a
+                href="/delete/{{ row[0] }}"
+                class="delete-btn">
+                Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <a href="/dashboard" class="back-btn">
+        Back To Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

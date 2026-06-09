@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Generator</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>🔐 SecureVault</h2>
+
+    <ul>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/vault">Vault</a></li>
+        <li><a href="/generator">Generator</a></li>
+        <li><a href="/security">Security</a></li>
+        <li><a href="/crypto">Crypto Lab</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+
+</div>
+
+<div class="main">
+
+    <div class="topbar">
+        <h1>Password Generator</h1>
+    </div>
+
+    <div class="form-card">
+
+        <h2>Generate Strong Password</h2>
+
+        <input
+        type="text"
+        id="generatedPassword"
+        placeholder="Generated Password">
+
+        <br><br>
+
+        <button onclick="generatePassword()">
+            Generate Password
+        </button>
+
+        <br><br>
+
+        <button onclick="copyText(document.getElementById('generatedPassword').value)">
+            Copy Password
+        </button>
+
+    </div>
+
+</div>
+
+</body>
+</html>

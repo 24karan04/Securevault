@@ -10,6 +10,39 @@ app.secret_key = "supersecretkey"
 
 
 # =========================
+# DATABASE SETUP
+# =========================
+
+def init_db():
+    conn = sqlite3.connect("database.db")
+    cur = conn.cursor()
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS users(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE,
+        password TEXT
+    )
+    """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS passwords(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        website TEXT,
+        username TEXT,
+        password TEXT
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
+
+init_db()
+
+
+# =========================
 # HOME
 # =========================
 
@@ -30,7 +63,10 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
 
-        register_user(username, password)
+        try:
+            register_user(username, password)
+        except:
+            pass
 
         return redirect("/login")
 
@@ -52,9 +88,7 @@ def login():
         user = login_user(username, password)
 
         if user:
-
             session["user_id"] = user[0]
-
             return redirect("/dashboard")
 
     return render_template("login.html")
@@ -73,12 +107,15 @@ def dashboard():
     conn = sqlite3.connect("database.db")
     cur = conn.cursor()
 
-    cur.execute(
-        "SELECT COUNT(*) FROM passwords WHERE user_id=?",
-        (session["user_id"],)
-    )
+    try:
+        cur.execute(
+            "SELECT COUNT(*) FROM passwords WHERE user_id=?",
+            (session["user_id"],)
+        )
+        total_passwords = cur.fetchone()[0]
 
-    total_passwords = cur.fetchone()[0]
+    except:
+        total_passwords = 0
 
     conn.close()
 
@@ -101,12 +138,16 @@ def vault():
     conn = sqlite3.connect("database.db")
     cur = conn.cursor()
 
-    cur.execute(
-        "SELECT * FROM passwords WHERE user_id=?",
-        (session["user_id"],)
-    )
+    try:
+        cur.execute(
+            "SELECT * FROM passwords WHERE user_id=?",
+            (session["user_id"],)
+        )
 
-    data = cur.fetchall()
+        data = cur.fetchall()
+
+    except:
+        data = []
 
     conn.close()
 
@@ -136,19 +177,17 @@ def add_password():
     conn = sqlite3.connect("database.db")
     cur = conn.cursor()
 
-    cur.execute(
-        """
+    cur.execute("""
         INSERT INTO passwords
         (user_id, website, username, password)
         VALUES (?, ?, ?, ?)
-        """,
-        (
-            session["user_id"],
-            website,
-            username,
-            encrypted_password
-        )
-    )
+    """,
+    (
+        session["user_id"],
+        website,
+        username,
+        encrypted_password
+    ))
 
     conn.commit()
     conn.close()
@@ -181,7 +220,7 @@ def delete(id):
 
 
 # =========================
-# PASSWORD GENERATOR
+# GENERATOR
 # =========================
 
 @app.route("/generator")
@@ -194,7 +233,7 @@ def generator():
 
 
 # =========================
-# SECURITY CENTER
+# SECURITY
 # =========================
 
 @app.route("/security")
@@ -207,7 +246,7 @@ def security():
 
 
 # =========================
-# CRYPTO LAB
+# CRYPTO
 # =========================
 
 @app.route("/crypto", methods=["GET", "POST"])
